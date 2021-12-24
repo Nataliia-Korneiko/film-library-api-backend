@@ -6,6 +6,6 @@
   "jsonLimit": 10000,
   "accountLimit": {
     "windowMs": 3600000,
-    "max": 2
+    "max": 20
   }
 }
