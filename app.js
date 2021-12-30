@@ -5,7 +5,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const { auth, users, films } = require('./routes');
+const { auth, films } = require('./routes');
 const { httpCode } = require('./helpers/constants');
 const { ErrorHandler } = require('./helpers/error-handler');
 const { apiLimit, jsonLimit } = require('./config/rate-limit.json');
@@ -44,7 +44,6 @@ app.use(
   })
 );
 app.use(`${api}/auth`, auth);
-app.use(`${api}/users`, users);
 app.use(`${api}/films`, films);
 
 app.use((req, res, _next) => {

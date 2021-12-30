@@ -19,6 +19,7 @@ const schemaSignin = Joi.object({
 
 const validate = (schema, body, next) => {
   const { error } = schema.validate(body);
+
   if (error) {
     const [{ message }] = error.details;
 

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { userService: services } = require('../services');
+const { usersServices: services } = require('../services');
 const { httpCode } = require('../helpers/constants');
 require('dotenv').config();
 
@@ -47,7 +47,7 @@ const signup = async (req, res, next) => {
         user: {
           _id: newUser._id,
           name: newUser.name,
-          email: newUser.email,
+          // email: newUser.email,
           token,
         },
       },
@@ -95,7 +95,8 @@ const signin = async (req, res, next) => {
         user: {
           _id: user._id,
           name: user.name,
-          email: user.email,
+          // email: user.email,
+          films: user.films,
           token,
         },
       },

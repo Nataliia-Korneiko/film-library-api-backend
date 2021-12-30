@@ -10,6 +10,12 @@ const httpCode = {
   INTERNAL_SERVER_ERROR: 500,
 };
 
+const filmStatus = {
+  WATCHED: 'watched',
+  QUEUED: 'queued',
+};
+
 module.exports = {
   httpCode,
+  filmStatus,
 };

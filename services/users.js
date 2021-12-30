@@ -2,7 +2,10 @@ const { User } = require('../models');
 
 const getUserByEmail = async (email) => {
   try {
-    return await User.findOne({ email });
+    return await User.findOne({ email }).populate({
+      path: 'films',
+      select: '-createdAt -updatedAt',
+    });
   } catch (error) {
     throw new Error(error.message);
   }
@@ -33,11 +36,11 @@ const updateToken = async (id, token) => {
   }
 };
 
-const userService = {
+const usersServices = {
   getUserByEmail,
   getUserById,
   addUser,
   updateToken,
 };
 
-module.exports = userService;
+module.exports = usersServices;

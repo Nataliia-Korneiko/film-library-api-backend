@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const { Schema } = require('mongoose');
+const { Schema, SchemaTypes } = require('mongoose');
 
 const SALT_FACTOR = 10;
 
@@ -30,6 +30,12 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
+    films: [
+      {
+        type: SchemaTypes.ObjectId,
+        ref: 'film',
+      },
+    ],
   },
   { versionKey: false, timestamps: true }
 );
