@@ -10,7 +10,7 @@ const addFilm = async (req, res, next) => {
       return res.status(httpCode.BAD_REQUEST).json({
         status: 'error',
         code: httpCode.BAD_REQUEST,
-        message: 'Invalid request body / Token not provided',
+        message: 'Invalid credentials',
       });
     }
 
@@ -25,10 +25,11 @@ const addFilm = async (req, res, next) => {
       code: httpCode.CREATED,
       message: 'Successful operation',
       data: {
-        // user: userId,
-        _id: film._id,
-        apiFilmId: film.apiFilmId,
-        status: film.status,
+        film: {
+          _id: film._id,
+          apiFilmId: film.apiFilmId,
+          status: film.status,
+        },
       },
     });
   } catch (error) {
@@ -47,7 +48,7 @@ const deleteFilm = async (req, res, next) => {
       return res.status(httpCode.BAD_REQUEST).json({
         status: 'fail',
         code: httpCode.BAD_REQUEST,
-        message: 'Invalid request body / Token not provided',
+        message: 'Invalid film id',
       });
     }
 

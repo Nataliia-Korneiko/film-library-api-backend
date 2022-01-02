@@ -10,7 +10,7 @@ const guard = (req, res, next) => {
       return res.status(httpCode.UNAUTHORIZED).json({
         status: 'error',
         code: httpCode.UNAUTHORIZED,
-        message: 'Not Authorized',
+        message: 'Not authorized',
       });
     }
 

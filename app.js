@@ -51,7 +51,7 @@ app.use((req, res, _next) => {
     status: 'error',
     code: httpCode.NOT_FOUND,
     message: `Use api on routes: ${req.baseUrl}${api}/auth/signup`,
-    data: 'Not Found',
+    data: 'Not found',
   });
 });
 
@@ -62,7 +62,7 @@ app.use((error, _req, res, _next) => {
     status: status === 500 ? 'fail' : 'error',
     code: status,
     message: error.message,
-    data: status === 500 ? 'Internal Server Error' : error.data,
+    data: status === 500 ? 'Internal server error' : error.data,
   });
 });
 

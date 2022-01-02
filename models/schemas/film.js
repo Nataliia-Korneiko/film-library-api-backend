@@ -1,4 +1,3 @@
-// const { Schema, SchemaTypes } = require('mongoose');
 const { Schema } = require('mongoose');
 const { filmStatus } = require('../../helpers/constants');
 

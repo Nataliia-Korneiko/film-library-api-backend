@@ -25,7 +25,7 @@ const validate = (schema, body, next) => {
 
     return next({
       status: httpCode.BAD_REQUEST,
-      message: `Field: ${message.replace(/"/g, '')}`,
+      message: `Field ${message.replace(/"/g, '')}`,
     });
   }
   next();
