@@ -1,0 +1,374 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "Film Library",
+    "description": "API documentation for the 'Film Library' project. [Back-End GitHub Repository](https://github.com/Nataliia-Korneiko/film-library-api-backend)",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [
+    { "url": "http://localhost:8080" },
+    { "url": "http://herokuapp.com" }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Auth endpoints"
+    },
+    {
+      "name": "Films",
+      "description": "Films endpoints"
+    }
+  ],
+  "paths": {
+    "/api/v1/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User authorization",
+        "parameters": [],
+        "requestBody": {
+          "description": "Authorization's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "Successful operation",
+            "content": {}
+          },
+          "400": {
+            "description": "Token not provided",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/films": {
+      "post": {
+        "tags": ["Films"],
+        "summary": "Add film",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Film's object",
+          "required": true,
+           "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddFilmRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+             "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddFilmResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Token not provided / Invalid credentials",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/v1/films/{filmId}": {
+      "delete": {
+        "tags": ["Films"],
+        "summary": "Delete film",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "filmId",
+            "description": "Film's id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {}
+          },
+          "400": {
+            "description": "Token not provided / Invalid film id",
+            "content": {}
+          },
+           "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SignUpRequest": {
+        "required": ["name", "email", "password"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Alex"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "example": "alex@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "12345678"
+          }
+        }
+      },
+      "SignUpResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "61d1ee18e10b2a08fcc0bbaf"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "User's name",
+                    "example": "Alex"
+                  },
+                  "token": {
+                    "type": "string",
+                    "description": "User's token",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDFlZTE4ZTEwYjJhMDhmY2MwYmJhZiIsImlhdCI6MTY0MTE0NzkyOCwiZXhwIjoxNjQxMjA1NTI4fQ.q_U_uhhpdTDL9mY9krs7lgrK26O5XfLexirpJYgZX68"
+                  }
+                }
+              } 
+            }
+          }
+        }
+      },
+      "SignInRequest": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "example": "alex@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "12345678"
+          }
+        }
+      },
+      "SignInResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "61d1ee18e10b2a08fcc0bbaf"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "User's name",
+                    "example": "Alex"
+                  },
+                  "films": {
+                    "type": "array",
+                    "description": "User films",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Film's id",
+                          "example": "61ce097af15349e79c557103"
+                        },
+                        "apiFilmId": {
+                          "type": "integer",
+                          "description": "Api film's id",
+                          "example": 645886
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "Film's status",
+                          "enum": ["watched", "queued"],
+                          "example": "watched"
+                        }
+                      }
+                    }
+                  },
+                  "token": {
+                    "type": "string",
+                    "description": "User's token",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDFlZTE4ZTEwYjJhMDhmY2MwYmJhZiIsImlhdCI6MTY0MTE0NzkyOCwiZXhwIjoxNjQxMjA1NTI4fQ.q_U_uhhpdTDL9mY9krs7lgrK26O5XfLexirpJYgZX68"
+                  }
+                } 
+              }
+            }
+          }
+        }
+      },
+      "AddFilmRequest": {
+        "required": ["apiFilmId", "status"],
+        "type": "object",
+        "properties": {
+          "apiFilmId": {
+            "type": "integer",
+            "description": "Api film's id",
+            "example": 645886
+          },
+          "status": {
+            "type": "string",
+            "description": "Film's status",
+            "enum": ["watched", "queued"],
+            "example": "watched"
+          }
+        }
+      },
+      "AddFilmResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "film": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Film's id",
+                    "example": "61ce097af15349e79c557103"
+                  },
+                  "apiFilmId": {
+                    "type": "integer",
+                    "description": "Api film's id",
+                    "example": 645886
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Film's status",
+                    "enum": ["watched", "queued"],
+                    "example": "watched"
+                  }
+                } 
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

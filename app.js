@@ -5,6 +5,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./config/swagger.json');
 const { auth, films } = require('./routes');
 const { httpCode } = require('./helpers/constants');
 const { ErrorHandler } = require('./helpers/error-handler');
@@ -43,6 +45,8 @@ app.use(
     },
   })
 );
+
+app.use(`${api}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(`${api}/auth`, auth);
 app.use(`${api}/films`, films);
 
