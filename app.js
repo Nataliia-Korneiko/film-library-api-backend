@@ -23,7 +23,7 @@ const accessLogStream = fs.createWriteStream(
   { flags: 'a' }
 );
 
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 app.use(helmet());
 app.use(cors('*'));
 app.use(express.json({ limit: jsonLimit }));
