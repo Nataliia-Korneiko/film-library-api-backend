@@ -25,10 +25,9 @@ const accessLogStream = fs.createWriteStream(
 
 app.set('trust proxy', 1);
 app.use(helmet());
-app.use(cors());
+app.use(cors('*'));
 app.use(express.json({ limit: jsonLimit }));
 app.use(logger('combined', { stream: accessLogStream }, formatsLogger));
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   '/api/',
   rateLimit({

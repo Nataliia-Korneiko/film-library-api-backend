@@ -12,8 +12,8 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "servers": [
-    { "url": "http://localhost:8080" },
-    { "url": "http://herokuapp.com" }
+    { "url": "https://film-library-api-backend.herokuapp.com" },
+    { "url": "http://localhost:8080" }
   ],
   "tags": [
     {
